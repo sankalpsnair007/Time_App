@@ -3,7 +3,6 @@ uvicorn[standard]
 easyocr
 numpy
 Pillow
-scikit-learn
-spacy
+
 python-dateutil
 python-multipart

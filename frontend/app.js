@@ -208,49 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('remainGross').innerText = formatRemain(remainGrossMins);
     });
 
-    // --- Chatbot Logic ---
-    const chatInput = document.getElementById('chatInput');
-    const sendChatBtn = document.getElementById('sendChatBtn');
-    const chatWindow = document.getElementById('chatWindow');
 
-    async function sendChat() {
-        const text = chatInput.value.trim();
-        if (!text) return;
-
-        // Add User message
-        appendMessage('user', text);
-        chatInput.value = '';
-
-        try {
-            const res = await fetch('http://127.0.0.1:8000/api/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ message: text })
-            });
-            const data = await res.json();
-
-            // Add Assistant message
-            appendMessage('assistant', data.reply);
-        } catch (err) {
-            console.error(err);
-            appendMessage('assistant', "Hmm, I cannot reach my server. Please ensure the FastAPI backend is running! The rule is 9 hours gross per day, 45 hours a week.");
-        }
-    }
-
-    sendChatBtn.addEventListener('click', sendChat);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendChat();
-    });
-
-    function appendMessage(role, text) {
-        const div = document.createElement('div');
-        div.className = `chat-message ${role}`;
-        div.innerText = text;
-        chatWindow.appendChild(div);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
 
     // --- Utilities ---
     function parseHHMM(val) {
