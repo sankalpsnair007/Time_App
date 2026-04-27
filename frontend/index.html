@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracking Calculator</title>
+    <!-- Modern google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>Time App Dashboard</h1>
+                <p>Track your Effective and Gross working hours effortlessly.</p>
+            </div>
+            <div style="display:flex; gap:20px;">
+                <div class="toggle-container">
+                    <span class="toggle-label">Dark Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="toggle-container">
+                    <span class="toggle-label">Week Calculator</span>
+                    <label class="switch">
+                        <input type="checkbox" id="weekCalculatorToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <!-- Left Column: Daily Calculator -->
+            <div class="card daily-calculator">
+                <h2>Calculate Total Working Time</h2>
+
+                <div class="input-group">
+                    <label>Effective Hours Worked Per Day (Goal):</label>
+                    <div class="time-dropdowns">
+                        <select id="goalHours"></select>
+                        <select id="goalMinutes"></select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>First Login Time:</label>
+                    <input type="time" id="firstLogin">
+                </div>
+
+                <div class="input-group">
+                    <label>Last Punch In Time:</label>
+                    <input type="time" id="lastPunchIn">
+                </div>
+
+                <div class="input-group">
+                    <label>Break Time Taken:</label>
+                    <div class="time-dropdowns">
+                        <select id="breakHours"></select>
+                        <select id="breakMinutes"></select>
+                    </div>
+                </div>
+
+                <button class="btn primary-btn" id="calculateDailyBtn">Calculate Total Time</button>
+
+                <div class="results-container">
+                    <!-- Effective Result -->
+                    <div class="result-box effective-box">
+                        <h3>Effective</h3>
+                        <p class="res-line">Total Hours Worked: <span id="effTotal" class="success-text">00h 00m</span>
+                        </p>
+                        <p class="res-line">Remaining Hours: <span id="effRemain" class="danger-text">00h 00m</span></p>
+                        <p class="res-line">Expected Punchout Time: <span id="effPunchout"
+                                class="warning-text">--:--</span></p>
+                    </div>
+                    <!-- Gross Result -->
+                    <div class="result-box gross-box">
+                        <h3>Gross</h3>
+                        <p class="res-line">Total Hours Worked: <span id="grossTotal" class="success-text">00h
+                                00m</span></p>
+                        <p class="res-line">Remaining Hours: <span id="grossRemain" class="danger-text">00h 00m</span>
+                        </p>
+                        <p class="res-line">Expected Punchout Time: <span id="grossPunchout"
+                                class="warning-text">--:--</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Weekly Calculator / OCR -->
+            <div class="card weekly-calculator" id="weeklyCard">
+                <h2>Weekly Total Working Time</h2>
+
+                <div class="input-group horizontal-group">
+                    <label>Worked days</label>
+                    <select id="workedDays">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected>5</option>
+                    </select>
+                </div>
+
+                <div class="input-group upload-group">
+                    <label>Select Hours Screenshot:</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="screenshotUpload" accept="image/*">
+                    </div>
+                    <small class="upload-hint">Upload an image to auto-fill times using our AI OCR</small>
+                </div>
+
+                <div class="days-table">
+                    <div class="days-header">
+                        <div>Day</div>
+                        <div>Effective Hours</div>
+                        <div>Gross Hours</div>
+                    </div>
+                    <div id="daysRows">
+                        <!-- Rows injected by JS -->
+                    </div>
+                </div>
+
+                <button class="btn primary-btn" id="calculateWeeklyBtn">Calculate</button>
+
+                <div class="weekly-results">
+                    <div class="weekly-column">
+                        <h4>Total Effective Hours</h4>
+                        <p id="totalEff" class="success-text">00h 00m 00s</p>
+                        <br>
+                        <h4>Remaining Hours</h4>
+                        <p id="remainEff" class="danger-text">00h 00m 00s</p>
+                    </div>
+                    <div class="weekly-column" style="text-align: right;">
+                        <h4>Total Gross Hours</h4>
+                        <p id="totalGross" class="success-text">00h 00m 00s</p>
+                        <br>
+                        <h4>Remaining Hours</h4>
+                        <p id="remainGross" class="danger-text">00h 00m 00s</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chatbot Widget -->
+            <div class="card chatbot-card">
+                <h2>AI Assistant</h2>
+                <div class="chat-window" id="chatWindow">
+                    <div class="chat-message assistant">
+                        Hello! I'm the Time Assistant. I can help compute your times or answer rules.
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Ask about calculations...">
+                    <button id="sendChatBtn" class="btn secondary-btn">Send</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
